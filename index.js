@@ -49,29 +49,44 @@ function userLetterGuess(){
       // console.log(singerNameToGuessArr);
       var letterGuessed = false;
       var letterPositions = [];
-
+      
+      var functionWillResolve = true;
       var asyncHandleLetterInWord = new Promise(
         function (resolve, reject) {
-          newWord.letterInWord(chosenLetter,singerNameToGuessArr, letterGuessed, letterPositions);
+          if (functionWillResolve) {
+            console.log("About  to Call LetterInWord Function");
+            newWord.letterInWord(chosenLetter,singerNameToGuessArr,letterGuessed, letterPositions);
+            console.log("In index.js/Promise code:",  chosenLetter, singerNameToGuessArr,
+                                                                   letterGuessed, letterPositions);
+            resolve("Promise Function Resolved");
+          } else {
+            var reason = new Error("Issue in Promise Function");
+            reject(reason);
           }
+        }
       );
 
+      // function executeLetterInWordPromise() {
       var executeLetterInWordPromise = function () {
         asyncHandleLetterInWord
             .then
-                // (success => console.log("In index.js:",  chosenLetter, singerNameToGuessArr,
+                // (fulfilled => console.log("In index.js:",  chosenLetter, singerNameToGuessArr,
                 //                                             letterGuessed, letterPositions))
                 (function (fulfilled) {
+                  console.log("In index.js/Promise.then code:",  chosenLetter, singerNameToGuessArr,
+                                                            letterGuessed, letterPositions);
                   console.log(fulfilled);
                 })
             .catch
                 // (error => console.log("ERROR in index.js" ));
                 (function (error) {
+                  console.log("In index.js/Promise.catch code:",  chosenLetter, singerNameToGuessArr,
+                                                            letterGuessed, letterPositions);
                   console.log(error.message);
                 });
       };
       
-      executeleLetterInWordPromise();
+      executeLetterInWordPromise();
 
       // newWord.letterInWord(chosenLetter,singerNameToGuessArr, letterGuessed, letterPositions)
       //  .then(success => console.log("In index.js:",  chosenLetter, singerNameToGuessArr, letterGuessed, letterPositions));
