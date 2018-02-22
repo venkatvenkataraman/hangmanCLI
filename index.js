@@ -77,7 +77,33 @@ function userLetterGuess(){
                 (function (fulfilled) {
                   console.log("index.js/Promise.THEN code:",  chosenLetter, singerNameToGuessArr,
                                                             letterGuessed, letterPositions );
-                  console.log(fulfilled);
+                  if (letterGuessed[0]) {
+                    for (let index = 0; index < letterPositions.length; index++) {
+                      singerNamePortionsGuessed[letterPositions[index]] = chosenLetter;
+                    }
+                    console.log(singerNamePortionsGuessed);
+                    if (singerNamePortionsGuessed === singerNameToGuessArr) {
+                      console.log("YOU ARE CORRECT AND A WINNER! ", singerNamePortionsGuessed, " is the correct answer!")
+                    } else {
+                      letterPositions = [];
+                      letterGuessed = [];
+                      //Go for the next letter guess.
+                      userLetterGuess();
+                    }
+                  }
+                  else {
+                      // You lose a guess
+                      remainingGuesses = remainingGuesses - 1;
+                      if (remainingGuesses === 0) {
+                        console.log("YOU ARE A LOSER!")
+                        //Check if they want to play again
+                      }
+                      //Go for the next letter guess.
+                      letterPositions = [];
+                      letterGuessed = [];
+                      userLetterGuess();
+                  };
+                  console.log(fulfilled, "In index.js/Promise.THEN code");
                 })
             .catch
                 // (error => console.log("ERROR in index.js" ));
@@ -89,6 +115,8 @@ function userLetterGuess(){
       };
       
       executeLetterInWordPromise();
+      // console.log("index.js/After executeLetter.. call",  chosenLetter, singerNameToGuessArr,
+      // letterGuessed, letterPositions );
 
       // newWord.letterInWord(chosenLetter,singerNameToGuessArr, letterGuessed, letterPositions)
       //  .then(success => console.log("In index.js:",  chosenLetter, singerNameToGuessArr, letterGuessed, letterPositions));
