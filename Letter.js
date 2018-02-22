@@ -11,8 +11,8 @@ var Letter = function(letterCharacter, letterGuessed) {
     this.returnUnderlyingCharacter = function(wordToGuess, 
                        letterCharacter, letterGuessed, letterPositions){
       // letterCharacter=JSON.stringify(letterCharacter);
-      console.log("Inside returnUnderlyingCharacter function");
-      console.log(wordToGuess.indexOf(letterCharacter));
+      // console.log("Inside returnUnderlyingCharacter function");
+      // console.log(wordToGuess.indexOf(letterCharacter));
       if (wordToGuess.indexOf(letterCharacter) >= 0 ) {
         this.letterCharacter = letterCharacter;
         this.letterGuessed = true;
@@ -33,7 +33,7 @@ var Letter = function(letterCharacter, letterGuessed) {
         letterGuessed.push(false);
       }
       
-      console.log("In Letter.returnUnderlyingCharacter function:", wordToGuess, letterCharacter, letterGuessed, letterPositions);
+      // console.log("In Letter.returnUnderlyingCharacter function:", wordToGuess, letterCharacter, letterGuessed, letterPositions);
       return letterGuessed, letterPositions;
     };
   };

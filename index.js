@@ -8,8 +8,8 @@ var letterPositions = [];
 var letterGuessed = [];
 var totalGuesses = 5;
 var remainingGuesses = 5;
-var singerNames = ["michael_jackson", "phil_collins", "madonna", "prince", 
-                          "elton_john", "celine_dion"];
+var singerNames = ["michael jackson", "phil collins", "madonna", "prince", 
+                          "elton john", "celine dion"];
 
 
 // Randomly chooses a choice from the singer names array.
@@ -20,22 +20,31 @@ singerNameToGuessArr = singerNameToGuessStr.split("");
 // Set up a word space array filled with "_" for user to guess and position letters in.
 var singerNamePortionsGuessed = [];
 for (let index = 0; index < singerNameToGuessArr.length; index++) {
-  singerNamePortionsGuessed.push("_");
+  if (singerNameToGuessArr[index]!= " "){
+    singerNamePortionsGuessed.push("_");
+  }
+  else {
+    singerNamePortionsGuessed.push(" ");
+  }
 }
 // console.log(singerNamePortionsGuessed);
 var newWord = new Word(singerNameToGuessArr);
-console.log(newWord);
+//console.log(newWord);
 
 function userLetterGuess(){
   inquirer
     .prompt([
       {
         type: "input",
-        message: ("You have " + remainingGuesses + " guesses. Pick a letter:"),
+        message: ("Name structure is: " + JSON.stringify(singerNamePortionsGuessed) + "\n\n" + "You have " + remainingGuesses + " guesses. Pick a letter:"),
         name: "letter",
         validate: function(input) {
             var regEx = new RegExp(/^[a-zA-Z\s]{1,1}$/);
             if (regEx.test(input)) {
+                if (singerNamePortionsGuessed.indexOf(input.toLowerCase()) >= 0){
+                    console.log(" WARNING:  You already guessed that letter. Try again!");
+                    return false;
+                }
                 return true;
             } else {
                 console.log(" ERROR:  Please enter ONLY 1 VALID LETTER at a time!");
@@ -45,7 +54,7 @@ function userLetterGuess(){
       }
     ]).then(function(inquirerResponse) {
       console.log("================================================================");
-      var chosenLetter = inquirerResponse.letter;
+      var chosenLetter = inquirerResponse.letter.toLowerCase();
       // console.log("letter chosen: ", chosenLetter);
       // console.log(newWord);
       // console.log(singerNameToGuessArr);
@@ -56,10 +65,10 @@ function userLetterGuess(){
       var asyncHandleLetterInWord = new Promise(
         function (resolve, reject) {
           if (functionWillResolve) {
-            console.log("index.js: About  to Call LetterInWord Function");
+            // console.log("index.js: About  to Call LetterInWord Function");
             newWord.letterInWord(chosenLetter,singerNameToGuessArr,letterGuessed, letterPositions );
-            console.log("index.js/Promise code:",  chosenLetter, singerNameToGuessArr,
-                                                                   letterGuessed, letterPositions );
+            // console.log("index.js/Promise code:",  chosenLetter, singerNameToGuessArr,
+                                                                  //  letterGuessed, letterPositions );
             resolve("Promise Function Resolved");
           } else {
             var reason = new Error("Issue in Promise Function");
@@ -75,13 +84,13 @@ function userLetterGuess(){
                 // (fulfilled => console.log("In index.js:",  chosenLetter, singerNameToGuessArr,
                 //                                             letterGuessed, letterPositions))
                 (function (fulfilled) {
-                  console.log("index.js/Promise.THEN code:",  chosenLetter, singerNameToGuessArr,
-                                                            letterGuessed, letterPositions );
+                  // console.log("index.js/Promise.THEN code:",  chosenLetter, singerNameToGuessArr,
+                                                            // letterGuessed, letterPositions );
                   if (letterGuessed[0]) {
                     for (let index = 0; index < letterPositions.length; index++) {
                       singerNamePortionsGuessed[letterPositions[index]] = chosenLetter;
                     }
-                    console.log(singerNamePortionsGuessed);
+                    console.log(JSON.stringify(singerNamePortionsGuessed));
                     // console.log(singerNameToGuessArr);
                     if (JSON.stringify(singerNamePortionsGuessed) === JSON.stringify(singerNameToGuessArr)) {
                       console.log("YOU ARE CORRECT AND A WINNER! ", JSON.stringify(singerNamePortionsGuessed), " is the correct answer!")
@@ -104,13 +113,13 @@ function userLetterGuess(){
                       letterGuessed = [];
                       userLetterGuess();
                   };
-                  console.log(fulfilled, "In index.js/Promise.THEN code");
+                  // console.log(fulfilled, "In index.js/Promise.THEN code");
                 })
             .catch
                 // (error => console.log("ERROR in index.js" ));
                 (function (error) {
-                  console.log("In index.js/Promise.CATCH code:",  chosenLetter, singerNameToGuessArr,
-                                                            letterGuessed, letterPositions );
+                  // console.log("In index.js/Promise.CATCH code:",  chosenLetter, singerNameToGuessArr,
+                                                            // letterGuessed, letterPositions );
                   console.log(error.message);
                 });
       };
@@ -164,6 +173,11 @@ function playAgain() {
   })
 }
 
+console.log("                   COMMAND LINE HANGMAN GAME                    ");
+console.log("================================================================");
+console.log("Guess the name of a 80s Pop Singer.");
+console.log("You have a maximum of 5 bad guesses before you get hanged!");
+console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 userLetterGuess();
 
 

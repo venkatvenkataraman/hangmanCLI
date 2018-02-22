@@ -20,12 +20,12 @@ var Word = function(wordToGuess) {
     //defined in Letter.js)
     this.letterInWord = function(letterCharacter,wordToGuess,letterGuessed, letterPositions){
         var letter = new Letter (letterCharacter, letterGuessed);
-        console.log("word.js/letter object: ", letter);
-        console.log("word.js - before calling returnUnderlyingCharacter", wordToGuess, letterCharacter, 
-                                               letterGuessed, letterPositions);
+        // console.log("word.js/letter object: ", letter);
+        // console.log("word.js - before calling returnUnderlyingCharacter", wordToGuess, letterCharacter, 
+                                              //  letterGuessed, letterPositions);
         letter.returnUnderlyingCharacter(wordToGuess, letterCharacter, letterGuessed, letterPositions);
-        console.log("word.js - after calling returnUnderlyingCharacter", wordToGuess, letterCharacter, 
-                                               letterGuessed, letterPositions);
+        // console.log("word.js - after calling returnUnderlyingCharacter", wordToGuess, letterCharacter, 
+                                              //  letterGuessed, letterPositions);
         return letterGuessed, letterPositions;
 
         // var theArrayIWAnt = letter.ReturnUnderlying...();
