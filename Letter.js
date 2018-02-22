@@ -11,25 +11,30 @@ var Letter = function(letterCharacter, letterGuessed) {
     this.returnUnderlyingCharacter = function(wordToGuess, 
                        letterCharacter, letterGuessed, letterPositions){
       // letterCharacter=JSON.stringify(letterCharacter);
-      // console.log("Inside returnUnd.. function", wordToGuess, letterCharacter, letterGuessed );
-      // console.log(wordToGuess.indexOf(letterCharacter));
+      console.log("Inside returnUnderlyingCharacter function");
+      console.log(wordToGuess.indexOf(letterCharacter));
       if (wordToGuess.indexOf(letterCharacter) >= 0 ) {
         this.letterCharacter = letterCharacter;
         this.letterGuessed = true;
-        letterPositions = [];
+        // letterGuessed = true;
+        letterGuessed.push(true);
+        //letterPositions = [];
         for (let index = 0; index < wordToGuess.length; index++) {
           if (wordToGuess[index] === letterCharacter){
             letterPositions.push(index);
           };
-          
         }
       }
       else {
         this.letterCharacter = "_";
+        letterCharacter = "_";
         this.letterGuessed = false;
+        // letterGuessed = false;
+        letterGuessed.push(false);
       }
-  
-      console.log("In Letter.returnUnd ...:", wordToGuess, letterCharacter, letterGuessed, letterPositions);
+      
+      console.log("In Letter.returnUnderlyingCharacter function:", wordToGuess, letterCharacter, letterGuessed, letterPositions);
+      return letterGuessed, letterPositions;
     };
   };
   

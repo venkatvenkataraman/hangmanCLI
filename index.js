@@ -1,9 +1,11 @@
 // Load the inquirer package and other dependent packages 
 var inquirer = require("inquirer");
-var Letter = require("./Letter.js");
+// var Letter = require("./Letter.js");
 var Word = require("./Word.js");
 
 //Define the global variables
+var letterPositions = [];
+var letterGuessed = [];
 var totalGuesses = 5;
 var remainingGuesses = 5;
 var singerNames = ["michael jackson", "phil collins", "madonna", "prince", 
@@ -47,17 +49,17 @@ function userLetterGuess(){
       // console.log("letter chosen: ", chosenLetter);
       // console.log(newWord);
       // console.log(singerNameToGuessArr);
-      var letterGuessed = false;
-      var letterPositions = [];
+      // var letterGuessed = false;
+      //letterPositions = [];
       
       var functionWillResolve = true;
       var asyncHandleLetterInWord = new Promise(
         function (resolve, reject) {
           if (functionWillResolve) {
-            console.log("About  to Call LetterInWord Function");
-            newWord.letterInWord(chosenLetter,singerNameToGuessArr,letterGuessed, letterPositions);
-            console.log("In index.js/Promise code:",  chosenLetter, singerNameToGuessArr,
-                                                                   letterGuessed, letterPositions);
+            console.log("index.js: About  to Call LetterInWord Function");
+            newWord.letterInWord(chosenLetter,singerNameToGuessArr,letterGuessed, letterPositions );
+            console.log("index.js/Promise code:",  chosenLetter, singerNameToGuessArr,
+                                                                   letterGuessed, letterPositions );
             resolve("Promise Function Resolved");
           } else {
             var reason = new Error("Issue in Promise Function");
@@ -73,15 +75,15 @@ function userLetterGuess(){
                 // (fulfilled => console.log("In index.js:",  chosenLetter, singerNameToGuessArr,
                 //                                             letterGuessed, letterPositions))
                 (function (fulfilled) {
-                  console.log("In index.js/Promise.then code:",  chosenLetter, singerNameToGuessArr,
-                                                            letterGuessed, letterPositions);
+                  console.log("index.js/Promise.THEN code:",  chosenLetter, singerNameToGuessArr,
+                                                            letterGuessed, letterPositions );
                   console.log(fulfilled);
                 })
             .catch
                 // (error => console.log("ERROR in index.js" ));
                 (function (error) {
-                  console.log("In index.js/Promise.catch code:",  chosenLetter, singerNameToGuessArr,
-                                                            letterGuessed, letterPositions);
+                  console.log("In index.js/Promise.CATCH code:",  chosenLetter, singerNameToGuessArr,
+                                                            letterGuessed, letterPositions );
                   console.log(error.message);
                 });
       };
