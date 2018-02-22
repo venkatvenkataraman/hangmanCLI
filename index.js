@@ -8,8 +8,8 @@ var letterPositions = [];
 var letterGuessed = [];
 var totalGuesses = 5;
 var remainingGuesses = 5;
-var singerNames = ["michael jackson", "phil collins", "madonna", "prince", 
-                          "elton john", "celine dion"];
+var singerNames = ["michael_jackson", "phil_collins", "madonna", "prince", 
+                          "elton_john", "celine_dion"];
 
 
 // Randomly chooses a choice from the singer names array.
@@ -82,8 +82,9 @@ function userLetterGuess(){
                       singerNamePortionsGuessed[letterPositions[index]] = chosenLetter;
                     }
                     console.log(singerNamePortionsGuessed);
-                    if (singerNamePortionsGuessed === singerNameToGuessArr) {
-                      console.log("YOU ARE CORRECT AND A WINNER! ", singerNamePortionsGuessed, " is the correct answer!")
+                    // console.log(singerNameToGuessArr);
+                    if (JSON.stringify(singerNamePortionsGuessed) === JSON.stringify(singerNameToGuessArr)) {
+                      console.log("YOU ARE CORRECT AND A WINNER! ", JSON.stringify(singerNamePortionsGuessed), " is the correct answer!")
                     } else {
                       letterPositions = [];
                       letterGuessed = [];
