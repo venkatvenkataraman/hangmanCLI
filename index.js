@@ -31,12 +31,24 @@ for (let index = 0; index < singerNameToGuessArr.length; index++) {
 var newWord = new Word(singerNameToGuessArr);
 //console.log(newWord);
 
+function cleanNameForDisplay (singerNameArray){
+      var cleanedUpSingerName = "";
+      for (let index = 0; index < singerNameArray.length; index++) {
+         cleanedUpSingerName = cleanedUpSingerName + " " + singerNamePortionsGuessed[index];
+      }
+      return cleanedUpSingerName;
+}
+
 function userLetterGuess(){
+  if (remainingGuesses == 0) {
+    console.log("YOU ARE A LOSER!")
+    //Check if they want to play again
+  }
+  var singerName = cleanNameForDisplay(singerNamePortionsGuessed);
   inquirer
     .prompt([
-      {
-        type: "input",
-        message: ("Name structure is: " + JSON.stringify(singerNamePortionsGuessed) + "\n\n" + "You have " + remainingGuesses + " guesses. Pick a letter:"),
+      { type: "input",
+        message: ("Name structure is: " +  singerName + "\n\n" + "You have " + remainingGuesses + " guesses. Pick a letter:"),
         name: "letter",
         validate: function(input) {
             var regEx = new RegExp(/^[a-zA-Z\s]{1,1}$/);
@@ -90,10 +102,12 @@ function userLetterGuess(){
                     for (let index = 0; index < letterPositions.length; index++) {
                       singerNamePortionsGuessed[letterPositions[index]] = chosenLetter;
                     }
-                    console.log(JSON.stringify(singerNamePortionsGuessed));
+                    singerName = cleanNameForDisplay(singerNamePortionsGuessed);
+                    console.log(singerName);
+                    // console.log(JSON.stringify(singerNamePortionsGuessed));
                     // console.log(singerNameToGuessArr);
                     if (JSON.stringify(singerNamePortionsGuessed) === JSON.stringify(singerNameToGuessArr)) {
-                      console.log("YOU ARE CORRECT AND A WINNER! ", JSON.stringify(singerNamePortionsGuessed), " is the correct answer!")
+                      console.log("YOU ARE CORRECT AND A WINNER! ", cleanNameForDisplay(singerNamePortionsGuessed), " is the correct answer!")
                     } else {
                       letterPositions = [];
                       letterGuessed = [];
@@ -103,8 +117,8 @@ function userLetterGuess(){
                   }
                   else {
                       // You lose a guess
-                      remainingGuesses = remainingGuesses - 1;
-                      if (remainingGuesses === 0) {
+                      remainingGuesses = (remainingGuesses - 1);
+                      if (remainingGuesses == 0) {
                         console.log("YOU ARE A LOSER!")
                         //Check if they want to play again
                       }
